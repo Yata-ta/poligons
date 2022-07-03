@@ -21,12 +21,12 @@ class Game():
 
     def drawGrid(self, window) -> None:
         blockSize = 20 #Set the size of the grid block
-        print(max(range(self.posX, self.width, blockSize)))
-        for x in range(self.posX, self.width, blockSize):
-            for y in range(self.posY, self.height, blockSize):
+        
+        for x in range(self.posX, self.width+self.posX, blockSize):
+            for y in range(self.posY, self.height+self.posY, blockSize):
                 rect = pygame.Rect(x, y, blockSize, blockSize)
-                pygame.draw.rect(window, (0,0,0), rect,1)
-        print(x)
+                pygame.draw.rect(window, (0,0,0), rect, 1)
+        
 
 
 
@@ -43,11 +43,15 @@ class Window():
     gui = GUI()
     title = "Poligons"
     icon = pygame.image.load('icon.jpg')
+    framesPerSecond = 24
 
 
     def __init__(self):
 
+        pygame.init()
         self.win = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.UImanager = pygame_gui.UIManager((WIDTH, HEIGHT))
+        self.clock = pygame.time.Clock()
         
         self.initGUI()
 
@@ -61,20 +65,25 @@ class Window():
         self.win.blit(self.game.background, (self.game.posX,self.game.posY))
         self.game.drawGrid(self.win)
 
+        pygame.draw.circle(self.win, (0,0,0), (450+70, 300+50), 5)
         #UIButton(relative_rect=button_layout_rect,
         #    text='Hello',
         #  container=self.win)
 
+        rect = pygame.Rect(300, 200, 50, 20)
+        pygame_gui.elements.ui_button.UIButton(relative_rect=rect,text='Hello', manager = self.UImanager, container=self.win())
+
     def run(self):
 
         while(self.running == True):
-            
+            dt = self.clock.tick(self.framesPerSecond)
             
             for event in pygame.event.get():
 
                 if event.type == pygame.QUIT:
                     self.running = False
         
+            print(self.clock.get_fps())
             pygame.display.update()
         pygame.quit()
 
