@@ -1,6 +1,7 @@
 import pygame
 import pygame_gui
 import buttons
+import interface
 
 
 
@@ -40,29 +41,6 @@ class GUI():
 
 
 
-
-
-
-class Mouse():
-
-    def __init__(self) -> None:
-        pass
-    
-    def getPosition(self):
-        return pygame.mouse.get_pos()
-    def getClickLeft(self):
-        return pygame.mouse.get_pressed()[0]
-
-
-class Interface ():
-    
-    mouse = Mouse()
-
-    def __init__(self) -> None:
-        pass
-
-
-
 def changeLabelText():
     print("Click")
     pass
@@ -74,7 +52,7 @@ class Window():
     running = True
     game = Game()
     gui = GUI()
-    interface = Interface()
+    interface = interface.Interface()
 
 
     title = "Poligons"
